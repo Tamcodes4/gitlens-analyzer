@@ -18,7 +18,8 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 client = Groq(api_key=GROQ_API_KEY)
 
-DB_PATH = "/tmp/history.db"
+# 🛠️ FIXED: Saved in the project's root folder instead of /tmp/ for Render compatibility
+DB_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), "history.db")
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -83,7 +84,6 @@ def get_github_data(username):
     }
     return profile_summary, None
 
-# 🛠️ 3. Updated function to handle Groq text completion pipelines
 def generate_email_groq(profile, purpose):
     if not GROQ_API_KEY:
         return (
@@ -205,6 +205,8 @@ def export_excel(username):
     wb.save(temp_filename)
     return send_file(temp_filename, as_attachment=True)
 
+# 🛠️ Ensures that the database creates tables securely before Gunicorn launches routing handles
+init_db()
+
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True, port=5000)
