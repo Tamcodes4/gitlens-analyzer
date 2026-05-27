@@ -18,4 +18,5 @@ Create a `.env` file in the root folder and add your keys:
 GITHUB_TOKEN=your_github_token
 GROQ_API_KEY=your_groq_api_key
 
-# Run python app.py to start!
+# Run this to start the application!
+python app.py
