@@ -18,7 +18,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 client = Groq(api_key=GROQ_API_KEY)
 
-DB_PATH = "history.db"
+DB_PATH = "/tmp/history.db"
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
