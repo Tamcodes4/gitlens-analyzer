@@ -1,0 +1,7 @@
+.env
+history.db
+__pycache__/
+*.pyc
+*_analysis.xlsx
+.venv/
+venv/

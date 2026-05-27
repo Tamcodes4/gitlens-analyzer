@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitLens — GitHub Profile Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <nav class="navbar">
+    <div class="logo"><span class="logo-icon">⬡</span> GitLens</div>
+    <button class="btn-outline" onclick="toggleHistory()">Search History</button>
+  </nav>
+
+  <main class="container">
+    <header class="hero">
+      <h1>Analyze any GitHub<br /><span class="accent">developer profile.</span></h1>
+      <p class="subtitle">Paste a username. Get their tech stack, top projects, and an AI-crafted outreach email — exported to Excel in one click.</p>
+    </header>
+
+    <div class="search-card">
+      <div class="search-row">
+        <div class="input-group">
+          <span class="input-prefix">github.com/</span>
+          <input type="text" id="username" placeholder="torvalds" autocomplete="off" onkeydown="if(event.key === 'Enter') analyze()" />
+        </div>
+        <select id="purpose">
+          <option value="Collaboration pitch">Collaboration Pitch</option>
+          <option value="OSS contribution inquiry">OSS Contribution</option>
+          <option value="Job referral message">Job Referral</option>
+          <option value="Mentorship request">Mentorship Request</option>
+        </select>
+        <button class="btn-primary" onclick="analyze()">
+          <span id="btn-text">Analyze →</span>
+        </button>
+      </div>
+      <p id="error-msg" class="error-msg hidden"></p>
+    </div>
+
+    <div id="results" class="results-grid hidden">
+      <div class="left-col">
+        <div class="card profile-card">
+          <div class="profile-header">
+            <img id="avatar" src="" alt="Avatar" class="avatar" />
+            <div class="profile-title">
+              <h2 id="profile-name"></h2>
+              <p id="profile-bio" class="muted"></p>
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="stat">
+              <span id="stat-repos" class="stat-num">0</span>
+              <span class="stat-label">repos</span>
+            </div>
+            <div class="stat">
+              <span id="stat-followers" class="stat-num">0</span>
+              <span class="stat-label">followers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card stack-card">
+          <h3 class="card-title">Tech Stack</h3>
+          <div id="lang-bars" class="lang-bars"></div>
+          <div id="top-repo" class="top-repo hidden">
+            <span class="repo-label">⭐ Top repo</span>
+            <a id="top-repo-link" href="#" target="_blank" class="repo-name"></a>
+            <p id="top-repo-desc" class="muted small"></p>
+            <span id="top-repo-stars" class="star-count"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card email-card">
+        <div class="email-header">
+          <h3 class="card-title">✉ AI-Generated Outreach Email</h3>
+          <div class="email-actions">
+            <button class="btn-ghost" onclick="copyEmail()">Copy</button>
+            <button class="btn-ghost export-btn" id="export-btn" onclick="exportExcel()">Export to Excel ↓</button>
+          </div>
+        </div>
+        <div id="email-body" class="email-body"></div>
+      </div>
+    </div>
+
+    <div id="history-panel" class="hidden">
+      <h3 class="card-title" style="margin-bottom: 1rem;">Recent Searches</h3>
+      <div id="history-list" class="history-list"></div>
+    </div>
+  </main>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
